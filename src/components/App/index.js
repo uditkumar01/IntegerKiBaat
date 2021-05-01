@@ -12,7 +12,7 @@ export default function App() {
     return (
       <div className="App">
 
-      {user? <SignIn/> : <Messenger />}
+      {!user? <SignIn/> : <Messenger />}
       </div>
     );
 }
@@ -32,7 +32,7 @@ function SignIn() {
 
 }
 
-function SignOut() {
+export function SignOut() {
   return auth.currentUser && (
     <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
   )
