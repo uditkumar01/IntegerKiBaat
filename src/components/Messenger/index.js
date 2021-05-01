@@ -14,9 +14,52 @@ export function updateActiveFlag(participants, userId, value = false) {
 
 export default function Messenger(props) {
   const [roomId, setRoomId] = useState("");
+  const [users, setUsers] = useState([]);
   const [participants, setParticipants] = useState([]);
+  const [isReadOnly, setIsReadOnly] = useState(false);
+  const [admin, setAdmin] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const observer = firestore
+      .collection("users")
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            const newUser = change.doc.data();
+            if (!users.find((user) => user.uid === newUser.uid)) {
+              setUsers((prev) => [...prev, newUser]);
+            }
+          }
+        });
+      });
+
+    return () => {
+      observer();
+    };
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const snapshot = await firestore
+        .collection("rooms")
+        .where("participants", "array-contains", {
+          active: false,
+          userId: "jiAW4zjyHhMLqSUfoi5gaBdrvIv2",
+        })
+        .get();
+      if (snapshot.empty) {
+        console.log("No matching documents.");
+      }
+
+      snapshot.forEach((doc) => {
+        console.log(doc.id, "=>", doc.data());
+      });
+    })();
+  }, []);
 
   const leaveRoom = async () => {
+    setIsLoading(true);
     const newParticipants = updateActiveFlag(
       participants,
       auth.currentUser.uid
@@ -26,10 +69,24 @@ export default function Messenger(props) {
     });
     setParticipants(newParticipants);
     setRoomId("");
+    setIsLoading(false);
+  };
+
+  const closeRoom = async () => {
+    setIsLoading(true);
+    await firestore.collection("rooms").doc(roomId).update({
+      readOnly: true,
+    });
+    setRoomId("");
+    setIsLoading(false);
   };
 
   return !roomId ? (
-    <RoomMenu setRoomId={setRoomId} setParticipants={setParticipants} />
+    <RoomMenu
+      setRoomId={setRoomId}
+      setParticipants={setParticipants}
+      setAdmin={setAdmin}
+    />
   ) : (
     <div className="messenger">
       {/* <div className="scrollable sidebar">
@@ -39,6 +96,8 @@ export default function Messenger(props) {
       <div className="scrollable content">
         <MessageList
           roomId={roomId}
+          isReadOnly={isReadOnly}
+          setIsReadOnly={setIsReadOnly}
           setParticipants={setParticipants}
           participants={participants}
         />
@@ -49,24 +108,35 @@ export default function Messenger(props) {
         <ul>
           {participants
             .filter(({ active }) => active)
-            .map(({ userId }) => (
-              <li>{userId}</li>
-            ))}
+            .map(({ userId }) => {
+              const user = users.find(({ uid }) => uid === userId);
+              return user && <li>{user.displayName}</li>;
+            })}
         </ul>
-        <button onClick={leaveRoom}>Leave Room</button>
+        <button disabled={isLoading} onClick={leaveRoom}>
+          Leave Room
+        </button>
+        <br />
+        {admin === auth.currentUser.uid && !isReadOnly && (
+          <button disabled={isLoading} onClick={closeRoom}>
+            Close Room
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
-function RoomMenu({ setRoomId, setParticipants }) {
+function RoomMenu({ setRoomId, setParticipants, setAdmin }) {
   const [name, setName] = useState("");
   const [topic, setTopic] = useState("");
   const [exsistingRoomId, setExsistingRoomId] = useState("");
   const [error, setError] = useState("");
   const roomsRef = firestore.collection("rooms");
+  const [isLoading, setIsLoading] = useState(false);
 
   const createRoom = async () => {
+    setIsLoading(true);
     const { id } = await roomsRef.add({
       name,
       topic,
@@ -74,17 +144,22 @@ function RoomMenu({ setRoomId, setParticipants }) {
       participants: [{ userId: auth.currentUser.uid, active: true }],
     });
     setParticipants([{ userId: auth.currentUser.uid, active: true }]);
+    setAdmin(auth.currentUser.uid);
     setRoomId(id);
+    setIsLoading(false);
   };
   const joinRoom = async () => {
     // exit user from room he is present in
+    setIsLoading(true);
     const roomRef = roomsRef.doc(exsistingRoomId);
     const doc = await roomRef.get();
     if (doc.exists) {
-      const { participants } = doc.data();
+      if (doc.readOnly) return;
+      const { participants, admin } = doc.data();
       const isPresent = participants.find(
         ({ userId }) => userId === auth.currentUser.uid
       );
+      setAdmin(admin);
       let newParticipants;
       if (!isPresent) {
         newParticipants = participants.concat({
@@ -102,8 +177,9 @@ function RoomMenu({ setRoomId, setParticipants }) {
       setParticipants(newParticipants);
       setRoomId(exsistingRoomId);
     } else {
-      setError(" room id is invalid");
+      setError("room id is invalid");
     }
+    setIsLoading(false);
   };
 
   // make participants array of objects with active flag and id
@@ -123,7 +199,9 @@ function RoomMenu({ setRoomId, setParticipants }) {
         value={topic}
         onChange={(e) => setTopic(e.target.value)}
       />
-      <button onClick={createRoom}>Create Room</button>
+      <button isDisaled={isLoading} onClick={createRoom}>
+        Create Room
+      </button>
       <h1>Join room</h1>
       <input
         type="text"
@@ -131,7 +209,9 @@ function RoomMenu({ setRoomId, setParticipants }) {
         value={exsistingRoomId}
         onChange={(e) => setExsistingRoomId(e.target.value)}
       />
-      <button onClick={joinRoom}>Join Room</button>
+      <button disabled={isLoading} onClick={joinRoom}>
+        Join Room
+      </button>
       {error && <div style={{ fontColor: "red" }}>{error}</div>}
     </div>
   );

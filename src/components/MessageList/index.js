@@ -7,9 +7,14 @@ import moment from "moment";
 
 import "./MessageList.css";
 import { auth, firestore } from "../../firebase/firebase";
-import { updateActiveFlag } from "../Messenger";
 
-export default function MessageList({ roomId, setParticipants, participants }) {
+export default function MessageList({
+  roomId,
+  isReadOnly,
+  setIsReadOnly,
+  setParticipants,
+  participants,
+}) {
   const roomRef = firestore.collection("rooms").doc(roomId);
   const messagesRef = roomRef.collection("messages");
 
@@ -21,7 +26,6 @@ export default function MessageList({ roomId, setParticipants, participants }) {
       .onSnapshot((querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
-            console.log("New message", change.doc.data());
             setMessages((prev) => [...prev, change.doc.data()]);
           }
           // needed when we set up delete and edit functionality
@@ -39,18 +43,25 @@ export default function MessageList({ roomId, setParticipants, participants }) {
   }, []);
 
   useEffect(() => {
-    const observer = roomRef.onSnapshot(
-      (docSnapshot) => {
-        const { participants } = docSnapshot.data();
-        setParticipants(participants);
-      },
-      (err) => {
-        console.log(`Encountered error: ${err}`);
-      }
-    );
+    const observer = firestore
+      .collection("rooms")
+      .doc(roomId)
+      .onSnapshot(
+        (docSnapshot) => {
+          const { participants, readOnly } = docSnapshot.data();
+          if (readOnly) {
+            setIsReadOnly(true);
+          }
+          setParticipants(participants);
+        },
+        (err) => {
+          console.log(`Encountered error: ${err}`);
+        }
+      );
 
     return () => {
       observer();
+
       // remove user from room when he enters other room
       // (async()=>{
       //   const newParticipants = updateActiveFlag(
@@ -130,18 +141,19 @@ export default function MessageList({ roomId, setParticipants, participants }) {
           );
         })}
       </div>
-
-      <Compose
-        rightItems={[
-          <ToolbarButton key="photo" icon="ion-ios-camera" />,
-          <ToolbarButton key="image" icon="ion-ios-image" />,
-          <ToolbarButton key="audio" icon="ion-ios-mic" />,
-          <ToolbarButton key="money" icon="ion-ios-card" />,
-          <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
-          <ToolbarButton key="emoji" icon="ion-ios-happy" />,
-        ]}
-        sendMessage={sendMessage}
-      />
+      {!isReadOnly && (
+        <Compose
+          rightItems={[
+            <ToolbarButton key="photo" icon="ion-ios-camera" />,
+            <ToolbarButton key="image" icon="ion-ios-image" />,
+            <ToolbarButton key="audio" icon="ion-ios-mic" />,
+            <ToolbarButton key="money" icon="ion-ios-card" />,
+            <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
+            <ToolbarButton key="emoji" icon="ion-ios-happy" />,
+          ]}
+          sendMessage={sendMessage}
+        />
+      )}
     </div>
   );
 }

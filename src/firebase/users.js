@@ -9,9 +9,10 @@ export const createUserDocument = async (user) => {
 
   //if document does not exsist create a new user document
   if (!snapshot.exists) {
-    const { displayName, email, photoURL } = user;
+    const { uid, displayName, email, photoURL } = user;
     try {
       await userRef.set({
+        uid,
         displayName,
         email,
         photoURL,
@@ -19,15 +20,5 @@ export const createUserDocument = async (user) => {
     } catch (error) {
       console.error("Error creating user", console.error);
     }
-  }
-};
-
-export const getUserDocument = async (uid) => {
-  if (!uid) return null;
-  try {
-    const userDocument = await firestore.collection("users").doc(uid).get();
-    return { uid, ...userDocument.data() };
-  } catch (error) {
-    console.error("Error fetching user", error.message);
   }
 };

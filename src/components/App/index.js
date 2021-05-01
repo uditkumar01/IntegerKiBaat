@@ -1,20 +1,28 @@
-import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useEffect, useState } from "react";
 import firebase, { auth } from "../../firebase/firebase";
 import { createUserDocument } from "../../firebase/users";
 
 import Messenger from "../Messenger";
 
 export default function App() {
-  const [user] = useAuthState(auth);
-  return <div className="App">{!user ? <SignIn /> : <Messenger />}</div>;
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        setIsSignedIn(true);
+        createUserDocument(user);
+      }
+    });
+  }, []);
+
+  return <div className="App">{!isSignedIn ? <SignIn /> : <Messenger />}</div>;
 }
 
 function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
-    createUserDocument(auth.currentUser);
   };
 
   return (
