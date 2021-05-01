@@ -1,11 +1,12 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import firebase, { auth } from "../../firebase/firebase";
 import { createUserDocument } from "../../firebase/users";
 
 import Messenger from "../Messenger";
 
 export default function App() {
-  const user = auth.currentUser;
+  const [user] = useAuthState(auth);
   return <div className="App">{!user ? <SignIn /> : <Messenger />}</div>;
 }
 
