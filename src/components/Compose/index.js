@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+import { auth } from "../../firebase/firebase";
 import "./Compose.css";
 
 export default function Compose({ rightItems, sendMessage }) {

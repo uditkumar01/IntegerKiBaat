@@ -6,28 +6,16 @@ import Message from "../Message";
 import moment from "moment";
 
 import "./MessageList.css";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore } from "../../firebase";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { auth, firestore } from "../../firebase/firebase";
+import { updateActiveFlag } from "../Messenger";
 
-export default function MessageList() {
-  const messagesRef = firestore.collection("messages");
+export default function MessageList({ roomId, setParticipants, participants }) {
+  const roomRef = firestore.collection("rooms").doc(roomId);
+  const messagesRef = roomRef.collection("messages");
 
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // (async () => {
-    //   const snapshot = await messagesRef.orderBy("timestamp").get();
-    //   if (snapshot.empty) {
-    //     console.log("No matching documents.");
-    //     return;
-    //   }
-    //   const fetchedMessages = [];
-    //   snapshot.forEach((doc) => {
-    //     fetchedMessages.push(doc.data());
-    //   });
-    //   setMessages(fetchedMessages);
-    // })();
     const observer = messagesRef
       .orderBy("timestamp")
       .onSnapshot((querySnapshot) => {
@@ -50,9 +38,32 @@ export default function MessageList() {
       });
   }, []);
 
+  useEffect(() => {
+    const observer = roomRef.onSnapshot(
+      (docSnapshot) => {
+        const { participants } = docSnapshot.data();
+        setParticipants(participants);
+      },
+      (err) => {
+        console.log(`Encountered error: ${err}`);
+      }
+    );
+
+    return () => {
+      observer();
+      // remove user from room when he enters other room
+      // (async()=>{
+      //   const newParticipants = updateActiveFlag(
+      //     participants,
+      //     auth.currentUser.uid
+      //   );
+      //   await roomRef.update({participants:newParticipants})
+      // })()
+    };
+  }, []);
+
   const sendMessage = async (message) => {
     await messagesRef.add(message);
-    // setMessages((prev) => [...prev, { ...message, id }]);
   };
 
   return (
@@ -83,7 +94,7 @@ export default function MessageList() {
           let showTimestamp = true;
 
           if (previous) {
-            let previousMoment = moment(previous.timestamp);
+            let previousMoment = moment(Date(previous.timestamp));
             let previousDuration = moment.duration(
               currentMoment.diff(previousMoment)
             );
@@ -121,17 +132,14 @@ export default function MessageList() {
       </div>
 
       <Compose
-        // rightItems={[
-        //     <ToolbarButton key="photo" icon="ion-ios-camera" />,
-        //     <ToolbarButton key="image" icon="ion-ios-image" />,
-        //     <ToolbarButton key="audio" icon="ion-ios-mic" />,
-        //     <ToolbarButton key="money" icon="ion-ios-card" />,
-        //     <ToolbarButton
-        //         key="games"
-        //         icon="ion-logo-game-controller-b"
-        //     />,
-        //     <ToolbarButton key="emoji" icon="ion-ios-happy" />,
-        // ]}
+        rightItems={[
+          <ToolbarButton key="photo" icon="ion-ios-camera" />,
+          <ToolbarButton key="image" icon="ion-ios-image" />,
+          <ToolbarButton key="audio" icon="ion-ios-mic" />,
+          <ToolbarButton key="money" icon="ion-ios-card" />,
+          <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
+          <ToolbarButton key="emoji" icon="ion-ios-happy" />,
+        ]}
         sendMessage={sendMessage}
       />
     </div>
