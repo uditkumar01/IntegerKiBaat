@@ -12,6 +12,15 @@ export function updateActiveFlag(participants, userId, value = false) {
   );
 }
 
+export function getParticipantNames(users, participants) {
+  return users
+    .filter(
+      (user) =>
+        !!participants.find((participant) => participant.userId === user.uid)
+    )
+    .map((user) => user.displayName);
+}
+
 export default function Messenger(props) {
   const [roomId, setRoomId] = useState("");
   const [users, setUsers] = useState([]);
@@ -45,7 +54,7 @@ export default function Messenger(props) {
         .collection("rooms")
         .where("participants", "array-contains", {
           active: false,
-          userId: "jiAW4zjyHhMLqSUfoi5gaBdrvIv2",
+          userId: auth.currentUser.uid,
         })
         .get();
       if (snapshot.empty) {
@@ -106,12 +115,12 @@ export default function Messenger(props) {
         Room id: {roomId}
         <h2>Participants</h2>
         <ul>
-          {participants
-            .filter(({ active }) => active)
-            .map(({ userId }) => {
-              const user = users.find(({ uid }) => uid === userId);
-              return user && <li>{user.displayName}</li>;
-            })}
+          {getParticipantNames(
+            users,
+            participants.filter(({ active }) => active)
+          ).map((displayName) => (
+            <li>{displayName}</li>
+          ))}
         </ul>
         <button disabled={isLoading} onClick={leaveRoom}>
           Leave Room
@@ -181,8 +190,6 @@ function RoomMenu({ setRoomId, setParticipants, setAdmin }) {
     }
     setIsLoading(false);
   };
-
-  // make participants array of objects with active flag and id
 
   return (
     <div>
