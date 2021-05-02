@@ -10,7 +10,7 @@ export default function UserImgWithStatus({
     return (
         <>
             <span
-                className={`user-status ${userStatus} ${imageClass}`}
+                className={`user-status ${userStatus?userStatus:""} ${imageClass?imageClass:""}`}
                 style={{ transform: `scale(${scale})` }}
                 style={height&&width?{height,width}:{}}
             >

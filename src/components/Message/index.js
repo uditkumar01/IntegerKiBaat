@@ -11,7 +11,7 @@ export default function Message({
     showTimestamp,
 }) {
     console.log(data.author.name);
-    const friendlyTimestamp = moment(new Date(data.timestamp)).format("LLLL");
+    const friendlyTimestamp = moment(Date(data.timestamp)).format("ddd LL");
     // console.log();
     return (
         <div

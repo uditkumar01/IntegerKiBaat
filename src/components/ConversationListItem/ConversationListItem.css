@@ -36,7 +36,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 240px;
+    min-width: 240px;
     padding-right: 1.3rem;
     /* background: red; */
     margin: 0;
