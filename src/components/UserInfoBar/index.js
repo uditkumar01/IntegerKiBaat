@@ -5,7 +5,7 @@ import Collapsible from "../Collapsible";
 export default function UserInfoBar({userBarOpen, setUserBarOpen}) {
     
     return (
-        <div className={`user-info-bar ${!userBarOpen?"close":""}`}>
+        <div className={`user-info-bar ${userBarOpen?"open":""}`}>
             <div className="user-info-card">
                 <UserImgWithStatus
                     photo={`http://www.pngmart.com/files/3/Man-PNG-Pic.png`}

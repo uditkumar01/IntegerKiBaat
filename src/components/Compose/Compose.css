@@ -62,9 +62,17 @@ button {
     cursor: pointer;
 }
 
+button:disabled{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .mini-send-btn{
     display: none;
 }
+/* .leftbar-sm .compose {
+    width: calc(100% - 70px);
+} */
 
 @media only screen and (max-width: 500px) {
     .mini-send-btn{

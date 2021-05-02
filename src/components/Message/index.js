@@ -9,11 +9,10 @@ export default function Message({
   startsSequence,
   endsSequence,
   showTimestamp,
-  author,
-  seen,
 }) {
   console.log(data);
   const friendlyTimestamp = moment(new Date(data.timestamp)).format("LLLL");
+  // console.log();
   return (
     <div
       className={[
@@ -40,16 +39,16 @@ export default function Message({
           )}
         </span>
         <div className="bubble" title={friendlyTimestamp}>
-          {!isMine && <p className={`message-author`}>{author}</p>}
+          {!isMine && <p className={`message-author`}>{data.author.name}</p>}
           <span>{data.message}</span>
           <small
             className={`message-time ${endsSequence ? "" : "make-invisible"}`}
           >
             8 min ago
-            <b className={`double-check ${seen ? "seen" : "sent"}`}>
+            {/* <b className={`double-check ${seen ? "seen" : "sent"}`}>
               <span className={`ion-ios-checkmark-empty`}></span>
               <span className={`ion-ios-checkmark-empty`}></span>
-            </b>
+            </b> */}
           </small>
         </div>
       </div>

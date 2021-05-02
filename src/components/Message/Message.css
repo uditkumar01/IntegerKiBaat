@@ -20,6 +20,9 @@
 
 .bubble {
     position: relative;
+    min-width: 100px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .message:not(.mine) .bubble {
@@ -87,6 +90,7 @@
     color: var(--light-grey-color);
     bottom: -1.7rem;
     left: 1.4rem;
+    width: max-content;
 }
 
 .mine .message-time {

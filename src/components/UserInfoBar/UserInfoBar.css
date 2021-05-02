@@ -34,13 +34,12 @@
         width: 360px;
         right: 0;
         z-index: 3;
-        transform: translate(0%,0);
-        opacity: 1;
-        transition: transform 1s, opacity 0.5s, visibility 1s ease;
-    }
-    .user-info-bar.close{
         transform: translateX(130%);
         opacity: 0.8;
-        
+        transition: transform 1s, opacity 0.5s, visibility 1s ease;
+    }
+    .user-info-bar.open{
+        transform: translate(0%,0);
+        opacity: 1;
     }
 }
