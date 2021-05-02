@@ -64,24 +64,7 @@ export default function Messenger() {
         };
     }, []);
 
-    useEffect(() => {
-        (async () => {
-            const snapshot = await firestore
-                .collection("rooms")
-                .where("participants", "array-contains", {
-                    active: false,
-                    userId: auth.currentUser.uid,
-                })
-                .get();
-            if (snapshot.empty) {
-                console.log("No matching documents.");
-            }
-
-            snapshot.forEach((doc) => {
-                console.log(doc.id, "=>", doc.data());
-            });
-        })();
-    }, []);
+    
 
     const leaveRoom = async () => {
         setIsLoading(true);
@@ -160,27 +143,6 @@ export default function Messenger() {
                     participants={participants}
                 />
             </div>
-            {/* <div className="scrollable sidebar">
-        Room id: {roomId}
-        <h2>Participants</h2>
-        <ul>
-          {getParticipantDetails(
-            users,
-            participants.filter(({ active }) => active)
-          ).map((displayName) => (
-            <li>{displayName}</li>
-          ))}
-        </ul>
-        <button disabled={isLoading} onClick={leaveRoom}>
-          Leave Room
-        </button>
-        <br />
-        {admin === auth.currentUser.uid && !isReadOnly && (
-          <button disabled={isLoading} onClick={closeRoom}>
-            Close Room
-          </button>
-        )}
-      </div> */}
 
             <div className="scrollable sidebar">
                 <UserInfoBar
