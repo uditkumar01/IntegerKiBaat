@@ -36,9 +36,9 @@ export default function Messenger(props) {
         querySnapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             const newUser = change.doc.data();
-            if (!users.find((user) => user.uid === newUser.uid)) {
-              setUsers((prev) => [...prev, newUser]);
-            }
+            // if (!users.find((user) => user.uid === newUser.uid)) {
+            setUsers((prev) => [...prev, newUser]);
+            // }
           }
         });
       });

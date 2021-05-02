@@ -17,7 +17,7 @@ export default function MessageList({
 }) {
   const roomRef = firestore.collection("rooms").doc(roomId);
   const messagesRef = roomRef.collection("messages");
-
+  const [topic, setTopic] = useState("");
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -37,6 +37,7 @@ export default function MessageList({
           // }
         });
         return () => {
+          // TODO: ensure this workd after routing
           observer();
         };
       });
@@ -48,7 +49,8 @@ export default function MessageList({
       .doc(roomId)
       .onSnapshot(
         (docSnapshot) => {
-          const { participants, readOnly } = docSnapshot.data();
+          const { participants, readOnly, topic } = docSnapshot.data();
+          setTopic(topic);
           if (readOnly) {
             setIsReadOnly(true);
           }
@@ -80,7 +82,7 @@ export default function MessageList({
   return (
     <div className="message-list">
       <Toolbar
-        title="Conversation Title"
+        title={topic}
         rightItems={[
           <ToolbarButton
             key="info"
