@@ -22,14 +22,14 @@ export default function MessageList(props) {
         },
         {
             id: 2,
-            author: "orange",
+            author: "apple",
             message:
                 "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
             timestamp: new Date().getTime(),
         },
         {
             id: 3,
-            author: "orange",
+            author: "apple",
             message:
                 "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
             timestamp: new Date().getTime(),
@@ -157,7 +157,7 @@ export default function MessageList(props) {
 
     return (
         <div className="message-list">
-            <Toolbar
+            {/* <Toolbar
                 title="Conversation Title"
                 rightItems={[
                     <ToolbarButton
@@ -167,7 +167,7 @@ export default function MessageList(props) {
                     <ToolbarButton key="video" icon="ion-ios-videocam" />,
                     <ToolbarButton key="phone" icon="ion-ios-call" />,
                 ]}
-            />
+            /> */}
 
             <div className="message-list-container">
                 {tempMessages.map((msg, i) => {

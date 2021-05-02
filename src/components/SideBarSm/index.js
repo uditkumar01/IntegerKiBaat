@@ -4,13 +4,9 @@ import Toolbar from "../Toolbar";
 import ToolbarButton from "../ToolbarButton";
 import axios from "axios";
 
-import "./SideBar.css";
+import "./SideBarSm.css";
 
-export default function SideBar({
-    sideBarOpen,
-    setSideBarOpen,
-    setUserBarOpen,
-}) {
+export default function SideBarSm({ sideBarOpen, setSideBarOpen, setUserBarOpen }) {
     const [conversations, setConversations] = useState([]);
     useEffect(() => {
         getConversations();
@@ -30,7 +26,7 @@ export default function SideBar({
         });
     };
     return (
-        <div className={`sidebar`}>
+        <div className="sidebar sidebar-sm">
             <Toolbar
                 title={
                     <>
@@ -56,8 +52,8 @@ export default function SideBar({
                 {conversations.map((conversation) => (
                     <ConversationListItem
                         key={conversation.name}
-                        data={conversation}
                         sideBarOpen={sideBarOpen}
+                        data={conversation}
                         userStatus={
                             ["not-active", "active", "standby"][
                                 Math.floor(Math.random() * 3)

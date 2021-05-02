@@ -1,0 +1,50 @@
+/* importing font */
+/* 
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap'); */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --purple-color: #7754f8;
+    --normal-purple-color: #a08af0;
+    --purple-color-100: #a3a1aa;
+    --light-purple-color: #f0edfe;
+    --dark-purple: #000166;
+    --light-grey-color: #a0abb6;
+    --grey-color: #484d52;
+    --dark-grey-color: #0c1234;
+    --red-color: #f2325b;
+    --sidebar-color: #ffffff;
+    --bg-color: #f6f7fb;
+    --chat-bg-color: #e5eaf0;
+    --chat-text-color: #12183a;
+    --my-chat-bg-color: #12a4ed;
+    --my-chat-text-color: #ffffff;
+    --lemon-green: #7dd624;
+    --border-color: #eeeef1;
+    --yellow-color: #ecc94b;
+    --green-color: #0bcf67;
+    --dark-purple-300: #5641a3;
+    --icon-color: #83d62d;
+    --icon-color-100: #272727;
+    --icon-bg-color: #f1faf0;
+    --light-box-shadow: 5px 5px 9px #e7e8ec,
+    -5px -5px 9px #ffffff;
+    --lighter-box-shadow: 5px 5px 13px #d4d4f5,
+    -5px -5px 9px #ffffff;
+    /* main site color */
+    --bg-color: #f6f7fb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline-width: 0;
+    border: none;
+    font-family: "Poppins", sans-serif, "Segoe UI", Tahoma, Geneva, Verdana,
+        sans-serif;
+    scroll-behavior: smooth;
+    scrollbar-width: 0px !important;
+    /* scrollbar-color: rebeccapurple green; */
+}
