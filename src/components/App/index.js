@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import firebase, { auth } from "../../firebase/firebase";
 import { createUserDocument } from "../../firebase/users";
+import "./App.css";
 
 import Messenger from "../Messenger";
 
@@ -8,12 +9,15 @@ export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    auth.onAuthStateChanged(function (user) {
+    const observer = auth.onAuthStateChanged(function (user) {
       if (user) {
         setIsSignedIn(true);
         createUserDocument(user);
       }
     });
+    return () => {
+      observer();
+    };
   }, []);
 
   return <div className="App">{!isSignedIn ? <SignIn /> : <Messenger />}</div>;

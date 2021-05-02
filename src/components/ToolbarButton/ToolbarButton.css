@@ -1,15 +1,45 @@
 .toolbar-button {
-  color: #007aff;
-  font-size: 28px;
-  transition: all 0.1s;
+    color: var(--purple-color);
+    font-size: 28px;
+    transition: all 0.1s;
+    height: 42px;
+    width: 42px;
+    border: none;
+    background: inherit;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    box-shadow: var(--light-box-shadow);
 }
-
-.toolbar-button:hover {
-  cursor: pointer;
-  color: #0063ce;
-}
-
 .toolbar-button:active {
-  color: #007aff;
-  opacity: 0.25;
+    transform: scale(0.9);
+}
+.toolbar-button:active,
+.toolbar-button:hover {
+    background-color: var(--light-purple-color);
+    /* opacity: 0.8; */
+}
+/* sm sidebar */
+.sidebar-sm .toolbar-button {
+    background: var(--light-purple-color);
+    margin: 0.5rem 0;
+}
+.sidebar-sm .toolbar-button:hover {
+    background: var(--purple-color);
+    color: var(--light-purple-color);
+}
+
+.temp-btn {
+    display: none;
+}
+
+@media only screen and (max-width: 1280px) {
+    .temp-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

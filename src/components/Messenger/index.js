@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { auth, firestore } from "../../firebase/firebase";
-import ConversationList from "../ConversationList";
 import MessageList from "../MessageList";
 import "./Messenger.css";
+import SideBar from "../SideBar";
+import SideBarSm from "../SideBarSm";
+import UserInfoBar from "../UserInfoBar";
 
 export function updateActiveFlag(participants, userId, value = false) {
   return participants.map((participant) =>
@@ -21,13 +23,15 @@ export function getParticipantNames(users, participants) {
     .map((user) => user.displayName);
 }
 
-export default function Messenger(props) {
+export default function Messenger() {
   const [roomId, setRoomId] = useState("");
   const [users, setUsers] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [admin, setAdmin] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sideBarOpen, setSideBarOpen] = useState(true);
+  const [userBarOpen, setUserBarOpen] = useState(false);
 
   useEffect(() => {
     const observer = firestore
@@ -98,11 +102,25 @@ export default function Messenger(props) {
     />
   ) : (
     <div className="messenger">
-      {/* <div className="scrollable sidebar">
-        <ConversationList />
-      </div> */}
-
       <div className="scrollable content">
+        <div
+          className="scrollable sidebar"
+          style={sideBarOpen ? { width: "360px" } : { width: "70px" }}
+        >
+          {sideBarOpen ? (
+            <SideBar
+              sideBarOpen={sideBarOpen}
+              setSideBarOpen={setSideBarOpen}
+              setUserBarOpen={setUserBarOpen}
+            />
+          ) : (
+            <SideBarSm
+              sideBarOpen={sideBarOpen}
+              setSideBarOpen={setSideBarOpen}
+              setUserBarOpen={setUserBarOpen}
+            />
+          )}
+        </div>
         <MessageList
           roomId={roomId}
           isReadOnly={isReadOnly}
@@ -111,7 +129,7 @@ export default function Messenger(props) {
           participants={participants}
         />
       </div>
-      <div className="scrollable sidebar">
+      {/* <div className="scrollable sidebar">
         Room id: {roomId}
         <h2>Participants</h2>
         <ul>
@@ -131,6 +149,13 @@ export default function Messenger(props) {
             Close Room
           </button>
         )}
+      </div> */}
+
+      <div className="scrollable sidebar">
+        <UserInfoBar
+          userBarOpen={userBarOpen}
+          setUserBarOpen={setUserBarOpen}
+        />
       </div>
     </div>
   );

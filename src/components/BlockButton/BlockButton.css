@@ -1,0 +1,38 @@
+.btn {
+    padding: 0.8rem 1rem;
+    margin: 0.5rem;
+    border-radius: 0 20px 20px;
+    background-color: var(--light-purple-color);
+    color: var(--purple-color);
+    font-size: 1.05rem;
+    font-weight: 500;
+    border: transparent;
+    box-shadow: var(--lighter-box-shadow);
+}
+.btn-block {
+    width: 85%;
+}
+.btn i{
+    font-weight: 800;
+}
+
+.btn:active {
+    transform: scale(0.9);
+    box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
+    outline: none;
+}
+.btn i {
+    padding-right: 0.8rem;
+}
+
+.temp-btn {
+    display: none;
+}
+
+@media only screen and (max-width: 1280px) {
+    .temp-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

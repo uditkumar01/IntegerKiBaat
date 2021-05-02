@@ -37,7 +37,7 @@ export default function MessageList({
           // }
         });
         return () => {
-          // TODO: ensure this workd after routing
+          // TODO: ensure this works after routing
           observer();
         };
       });
@@ -63,7 +63,6 @@ export default function MessageList({
 
     return () => {
       observer();
-
       // remove user from room when he enters other room
       // (async()=>{
       //   const newParticipants = updateActiveFlag(

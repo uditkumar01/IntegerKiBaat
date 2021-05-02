@@ -1,65 +1,146 @@
 .message {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .message .timestamp {
-  display: flex;
-  justify-content: center;
-  color: #999;
-  font-weight: 600;
-  font-size: 12px;
-  margin: 10px 0px;
-  text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    color: var(--light-grey-color);
+    font-weight: 600;
+    font-size: 12px;
+    margin: 10px 0px;
+    text-transform: uppercase;
 }
 
 .message .bubble-container {
-  font-size: 1rem;
-  display: flex;
+    font-size: 1rem;
+    display: flex;
+}
+
+.bubble {
+    position: relative;
+}
+
+.message:not(.mine) .bubble {
+    /* box-shadow: var(--light-box-shadow); */
+    
 }
 
 .message.mine .bubble-container {
-  justify-content: flex-end;
+    flex-direction: row-reverse;
 }
 
 .message.start .bubble-container .bubble {
-  /* margin-top: 10px; */
-  border-top-left-radius: 20px;
+    /* margin-top: 10px; */
+    border-top-left-radius: 20px;
 }
 
 .message.end .bubble-container .bubble {
-  border-bottom-left-radius: 20px;
-  /* margin-bottom: 10px; */
+    border-bottom-left-radius: 20px;
 }
 
 .message.mine.start .bubble-container .bubble {
-  margin-top: 10px;
-  border-top-right-radius: 20px;
+    margin-top: 2.3rem;
+    border-top-right-radius: 20px;
 }
 
 .message.mine.end .bubble-container .bubble {
-  border-bottom-right-radius: 20px;
-  margin-bottom: 10px;
+    border-bottom-right-radius: 20px;
+    margin-bottom: 2.3rem;
 }
 
 .message .bubble-container .bubble {
-  margin: 1px 0px;
-  background: #f4f4f8;
-  padding: 10px 15px;
-  border-radius: 20px;
-  max-width: 55%;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  /* max-width: 500px; */
+    margin: 0px 0px;
+    margin-bottom: 2px;
+    background: var(--chat-bg-color);
+    color: var(--chat-text-color);
+    padding: 1.2rem 1.5rem;
+    border-radius: 20px;
+    max-width: 55%;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-top: 0.8rem;
+}
+
+.message-author {
+    color: var(--purple-color);
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
 }
 
 .message.mine .bubble-container .bubble {
-  background: #007aff;
-  color: white;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
+    background: var(--my-chat-bg-color);
+    padding: 1.2rem 1.5rem;
+    color: var(--my-chat-text-color);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.message-time {
+    position: absolute;
+    color: var(--light-grey-color);
+    bottom: -1.7rem;
+    left: 1.4rem;
+}
+
+.mine .message-time {
+    left: unset;
+    right: 1.5rem;
+}
+
+.double-check {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.double-check.sent {
+    color: var(--light-grey-color);
+}
+
+.double-check.seen {
+    color: var(--green-color);
+}
+
+.double-check span {
+    font-size: 1.7rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -56%);
+}
+.double-check span:last-child {
+    transform: translate(-48%, -46%);
+}
+
+.make-invisible {
+    visibility: hidden;
+}
+
+.bubble-user-img {
+    /* background: var(-); */
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    position: relative;
+    top: 20px;
+}
+
+@media only screen and (max-width:500px) {
+    .message .bubble-container .bubble{
+        max-width: 75%;
+    }
+    .message.mine.end .bubble-container .bubble{
+        margin-bottom: 3rem;
+    }
+    .bubble-user-img {
+        /* background: red; */
+        padding-right: 0.1rem;
+        top: 0px;
+    }
 }

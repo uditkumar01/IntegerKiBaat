@@ -1,31 +1,43 @@
 .conversation-list-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 0.9rem;
 }
 
-.conversation-list-item:hover {
-  background: #eeeef1;
-  cursor: pointer;
+.sidebar-sm .conversation-list-item{
+    padding: 0.22rem;
 }
 
-.conversation-photo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
+.conversation-list-item:hover,
+.conversation-list-item:active,
+.conversation-list-item:focus {
+    background: var(--light-purple-color);
+    cursor: pointer;
+}
+
+.conversation-info {
+    padding-left: 1rem;
+    /* background: rebeccapurple; */
 }
 
 .conversation-title {
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: capitalize;
-  margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--grey-color);
+    margin: 0;
+    padding-bottom: 0.38rem;
 }
 
 .conversation-snippet {
-  font-size: 14px;
-  color: #888;
-  margin: 0;
+    font-size: 0.87rem;
+    color: var(--light-grey-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
+    padding-right: 1.3rem;
+    /* background: red; */
+    margin: 0;
 }
