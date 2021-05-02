@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Messenger.css";
 import { ChatPage } from "./ChatPage";
 import { RoomMenu } from "./RoomMenu";
+import { useChatContext } from "../../ContextProvider/ChatContextProvider"
 
 export function updateActiveFlag(participants, userId, value = false) {
   return participants.map((participant) =>
@@ -28,11 +29,7 @@ export function getParticipantDetails(users, participants) {
 }
 
 export default function Messenger() {
-  const [roomId, setRoomId] = useState("");
-
-  const [participants, setParticipants] = useState([]);
-
-  const [admin, setAdmin] = useState("");
+ const {roomId,setRoomId,admin,setAdmin,participants,setParticipants} = useChatContext()
 
   return !roomId ? (
     <RoomMenu
