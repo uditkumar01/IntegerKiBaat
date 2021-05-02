@@ -41,6 +41,11 @@ export default function Messenger() {
     const [userBarOpen, setUserBarOpen] = useState(false);
     // console.log(getParticipantDetails(users, participants), participants,"yoyo");
     useEffect(() => {
+      if(window.innerWidth<=750){
+        setSideBarOpen(false);
+      }
+    }, []);
+    useEffect(() => {
         const observer = firestore
             .collection("users")
             .onSnapshot((querySnapshot) => {
@@ -124,16 +129,25 @@ export default function Messenger() {
                             users,
                             participants
                         )}
+                        closeRoom={closeRoom}
+                        leaveRoom={leaveRoom}
+                        isLoading={isLoading}
+                        isAdmin={admin === auth.currentUser.uid}
                     />
                 ) : (
                     <SideBarSm
                         sideBarOpen={sideBarOpen}
                         setSideBarOpen={setSideBarOpen}
                         setUserBarOpen={setUserBarOpen}
+                        isLoading={isLoading}
                         participants={getParticipantDetails(
                             users,
                             participants
                         )}
+                        closeRoom={closeRoom}
+                        leaveRoom={leaveRoom}
+                        isLoading={isLoading}
+                        isAdmin={admin === auth.currentUser.uid}
                     />
                 )}
             </div>

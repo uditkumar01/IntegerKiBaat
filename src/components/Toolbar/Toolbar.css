@@ -61,7 +61,6 @@
   justify-content: center;
 }
 .upper-toolbar i{
-  font-weight: lighter;
   color: var(--purple-color);
   box-shadow: var(--light-box-shadow);
 }

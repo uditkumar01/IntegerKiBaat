@@ -11,6 +11,7 @@ export default function SideBarSm({
     setSideBarOpen,
     setUserBarOpen,
     participants,
+    ...rest
 }) {
     const [conversations, setConversations] = useState([]);
     useEffect(() => {
@@ -43,6 +44,7 @@ export default function SideBarSm({
                 }
                 sideBarOpen={sideBarOpen}
                 setUserBarOpen={setUserBarOpen}
+                {...rest}
                 rightItems={[
                     <ToolbarButton
                         key="add"

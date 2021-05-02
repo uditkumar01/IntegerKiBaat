@@ -10,7 +10,7 @@ export default function Message({
     endsSequence,
     showTimestamp,
 }) {
-    console.log(data.author.name);
+    // console.log(data.author.name);
     const friendlyTimestamp = moment(Date(data.timestamp)).format("ddd LL");
     // console.log();
     return (

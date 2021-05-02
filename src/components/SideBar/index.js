@@ -11,13 +11,13 @@ export default function SideBar({
     setSideBarOpen,
     setUserBarOpen,
     participants,
+    ...rest
 }) {
     const [conversations, setConversations] = useState([]);
     useEffect(() => {
         getConversations();
     }, []);
 
-    
     const getConversations = () => {
         axios.get("https://randomuser.me/api/?results=20").then((response) => {
             let newConversations = response.data.results.map((result) => {
@@ -44,6 +44,7 @@ export default function SideBar({
                 }
                 sideBarOpen={sideBarOpen}
                 setUserBarOpen={setUserBarOpen}
+                {...rest}
                 rightItems={[
                     <ToolbarButton
                         key="add"
@@ -51,12 +52,12 @@ export default function SideBar({
                         onClick={() =>
                             setSideBarOpen((sideBarOpen) => !sideBarOpen)
                         }
+                        
                     />,
                 ]}
             />
             <div className={`user-container`}>
                 {participants.map((participant) => {
-                    
                     return (
                         <ConversationListItem
                             key={participant.uid}

@@ -8,6 +8,11 @@
     font-weight: 500;
     border: transparent;
     box-shadow: var(--lighter-box-shadow);
+    transition: 0.2s all ease-in-out;
+}
+.btn:hover, .btn:active{
+    color: var(--light-purple-color);
+    background-color: var(--purple-color);
 }
 .btn-block {
     width: 85%;
@@ -19,18 +24,35 @@
 .btn i {
     font-weight: 800;
 }
-
+.btn.danger:hover, .btn.danger:active{
+    color: var(--light-red-color);
+    background: var(--red-color);
+}
 .btn:active {
     transform: scale(0.9);
     box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
     outline: none;
 }
 .btn i {
-    padding-right: 0.8rem;
+    margin-right: 0.8rem;
+    border-radius: 50%;
 }
 
 .temp-btn {
     display: none;
+}
+
+.animate-icon{
+    animation: animate-rotate 0.2s ease-in-out infinite;
+}
+
+@keyframes animate-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media only screen and (max-width: 1280px) {

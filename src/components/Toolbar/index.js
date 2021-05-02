@@ -9,6 +9,10 @@ export default function Toolbar({
     rightItems,
     sideBarOpen,
     setUserBarOpen,
+    closeRoom,
+    leaveRoom,
+    isAdmin,
+    isLoading,
 }) {
     return (
         <div className="toolbar">
@@ -20,20 +24,35 @@ export default function Toolbar({
             </div>
             {sideBarOpen ? (
                 <>
+                    {isAdmin && (
+                        <BlockButton
+                            name={"freeze chat"}
+                            icon={`${
+                                isLoading
+                                    ? "ion-load-c animate-icon"
+                                    : "fas fa-wind"
+                            }`}
+                            isBlock={true}
+                            onClick={closeRoom}
+                            disable={isLoading}
+                        />
+                    )}
                     <BlockButton
-                        name={"new room"}
-                        icon={`ion-android-add`}
-                        isBlock={true}
-                    />
-                    <BlockButton
-                        name={"join room"}
-                        icon={`ion-log-in`}
+                        name={"leave room"}
+                        icon={`${
+                            isLoading
+                                ? "ion-load-c animate-icon"
+                                : "fas fa-sign-out-alt"
+                        }`}
                         buttonClass={`danger`}
                         isBlock={true}
+                        onClick={leaveRoom}
+                        disable={isLoading}
                     />
+
                     <BlockButton
-                        name={"more info"}
-                        icon={`ion-ios-photos-outline`}
+                        name={" more info "}
+                        icon={`fas fa-ellipsis-h`}
                         buttonClass={"temp-btn"}
                         isBlock={true}
                         onClick={() =>
@@ -44,11 +63,28 @@ export default function Toolbar({
                 </>
             ) : (
                 <div className="btn-container">
-                    <ToolbarButton icon={`ion-android-add`} />
-                    <ToolbarButton icon={`ion-log-in`} />
-                    <ToolbarButton icon={`ion-ios-search-strong`} />
                     <ToolbarButton
-                        icon={`ion-ios-photos-outline`}
+                        icon={`${
+                            isLoading
+                                ? "ion-load-c animate-icon"
+                                : "fas fa-wind"
+                        }`}
+                        onClick={closeRoom}
+                        disable={isLoading}
+                    />
+                    <ToolbarButton
+                        icon={`${
+                            isLoading
+                                ? "ion-load-c animate-icon"
+                                : "fas fa-sign-out-alt"
+                        }`}
+                        buttonClass={`danger`}
+                        onClick={leaveRoom}
+                        disable={isLoading}
+                    />
+                    <ToolbarButton icon={`fas fa-search`} />
+                    <ToolbarButton
+                        icon={`fas fa-ellipsis-h`}
                         buttonClass={"temp-btn"}
                         onClick={() =>
                             setUserBarOpen((userBarOpen) => !userBarOpen)
