@@ -63,14 +63,6 @@ export default function MessageList({
     return () => {
       observer();
       setIsReadOnly(false);
-      // remove user from room when he enters other room
-      // (async()=>{
-      //   const newParticipants = updateActiveFlag(
-      //     participants,
-      //     auth.currentUser.uid
-      //   );
-      //   await roomRef.update({participants:newParticipants})
-      // })()
     };
   }, []);
 
@@ -80,18 +72,6 @@ export default function MessageList({
 
   return (
     <div className="message-list">
-      {/* <Toolbar
-        title={topic}
-        rightItems={[
-          <ToolbarButton
-            key="info"
-            icon="ion-ios-information-circle-outline"
-          />,
-          <ToolbarButton key="video" icon="ion-ios-videocam" />,
-          <ToolbarButton key="phone" icon="ion-ios-call" />,
-        ]}
-      /> */}
-
       <div className="message-list-container">
         {messages.map((msg, i) => {
           let previous = messages[i - 1];
