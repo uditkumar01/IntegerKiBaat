@@ -10,6 +10,7 @@ export default function Compose({ sendMessage }) {
             author: {
                 _id: auth.currentUser.uid,
                 name: auth.currentUser.displayName,
+                user_img: auth.currentUser.photoURL,
             },
             message,
             timestamp: new Date(),

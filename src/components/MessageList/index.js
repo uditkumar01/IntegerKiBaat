@@ -142,7 +142,7 @@ export default function MessageList({
                             endsSequence = false;
                         }
                     }
-                    console.log(current);
+                    // console.log(current);
                     return (
                         <Message
                             key={i}
