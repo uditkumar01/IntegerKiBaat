@@ -1,0 +1,64 @@
+.btn {
+    padding: 0.8rem 1rem;
+    margin: 0.5rem;
+    border-radius: 0 20px 20px;
+    background-color: var(--light-purple-color);
+    color: var(--purple-color);
+    font-size: 1.05rem;
+    font-weight: 500;
+    border: transparent;
+    box-shadow: var(--lighter-box-shadow);
+    transition: 0.2s all ease-in-out;
+}
+.btn:hover, .btn:active{
+    color: var(--light-purple-color);
+    background-color: var(--purple-color);
+}
+.btn-block {
+    width: 85%;
+}
+.btn.danger {
+    background: var(--light-red-color);
+    color: var(--red-color);
+}
+.btn i {
+    font-weight: 800;
+}
+.btn.danger:hover, .btn.danger:active{
+    color: var(--light-red-color);
+    background: var(--red-color);
+}
+.btn:active {
+    transform: scale(0.9);
+    box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
+    outline: none;
+}
+.btn i {
+    margin-right: 0.8rem;
+    border-radius: 50%;
+}
+
+.temp-btn {
+    display: none;
+}
+
+.animate-icon{
+    animation: animate-rotate 0.2s ease-in-out infinite;
+}
+
+@keyframes animate-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .temp-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

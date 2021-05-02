@@ -1,0 +1,85 @@
+.collapsible {
+    width: 100%;
+    /* background: chartreuse; */
+    /* box-shadow: var(--light-box-shadow); */
+}
+.collapsible-heading {
+    background: var(--sidebar-color);
+    padding: 1.1rem 1.2rem;
+    margin-top: 0.8rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: var(--light-box-shadow);
+}
+.collapsible-open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.collapsible-items {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    visibility: hidden;
+    opacity: 0;
+    max-height: 0px;
+    transition: max-height 0.6s ease;
+    box-shadow: var(--light-box-shadow);
+    cursor: pointer;
+}
+.no-history{
+    width: 100% !important;
+    flex-direction: column;
+    align-items: center;
+}
+.no-history-icon{
+    font-size: 5rem;
+    color: var(--light-grey-color);
+}
+.collapsible-items.close {
+    visibility: visible;
+    height: auto;
+    max-height: auto;
+    opacity: 1;
+    transition: max-height 1s, opacity 0.5s, visibility 1s ease;
+}
+
+.collapsible-item {
+    background: var(--sidebar-color);
+    list-style: none;
+    padding: 1rem 1rem;
+    display: flex;
+    box-shadow: var(--light-box-shadow);
+}
+.collapsible-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.collapsible-title span {
+    font-size: 1rem;
+    color: var(--purple-color-100);
+}
+.collapsible-title small {
+    font-size: 0.82rem;
+    color: var(--icon-color);
+}
+.collapsible-title.danger small{
+    color: var(--red-color);
+}
+.collapsible-title i{
+    margin-right: 0.3rem;
+}
+.collapsible-icon {
+    background: var(--icon-bg-color);
+    color: var(--icon-color-100);
+    height: 38px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    margin-right: 0.8rem;
+    font-size: 1.5rem;
+}

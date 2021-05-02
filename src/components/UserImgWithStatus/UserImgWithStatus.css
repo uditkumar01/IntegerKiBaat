@@ -1,0 +1,41 @@
+.conversation-photo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--sidebar-color);
+    overflow: hidden;
+}
+
+.user-status {
+    width: 48px;
+    height: 48px;
+    background: var(--lemon-green);
+    border-radius: 50%;
+    /* margin-right: 10px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--light-box-shadow);
+}
+
+.user-status.active {
+    background: var(--lemon-green);
+}
+.user-status.not-active {
+    background: var(--red-color);
+}
+.user-status.standby {
+    background: var(--yellow-color);
+}
+
+@media only screen and (max-width: 500px) {
+    .user-status.message-round-img {
+        width: 38px;
+        height: 38px;
+    }
+    .user-status.message-round-img .conversation-photo {
+        width: 36px;
+        height: 36px;
+    }
+}

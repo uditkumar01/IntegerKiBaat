@@ -1,0 +1,55 @@
+.messenger {
+    display: grid;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-color);
+
+    grid-template-columns: 360px auto 360px;
+    /* grid-template-rows: 60px auto 60px; */
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+}
+
+.messenger.leftbar-sm {
+    grid-template-columns: 70px auto 360px;
+}
+
+.container {
+    padding: 10px;
+}
+
+.scrollable {
+    position: relative;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    background: var(--bg-color);
+}
+
+.sidebar {
+    background: var(--sidebar-color);
+    grid-row-start: 1;
+    grid-row-end: span 3;
+    background: var(--bg-color);
+}
+
+.content {
+    background: inherit;
+    grid-row-start: 1;
+    grid-row-end: span 3;
+    width: auto;
+    /* background-color: red; */
+}
+
+.footer {
+    grid-column-start: 2;
+    background: inherit;
+}
+
+@media only screen and (max-width: 1280px) {
+    .messenger {
+        grid-template-columns: 360px auto 0;
+    }
+    .messenger.leftbar-sm {
+        grid-template-columns: 70px auto 0;
+    }
+}

@@ -1,0 +1,63 @@
+.toolbar-button {
+    color: var(--purple-color);
+    font-size: 20px;
+    transition: all 0.1s;
+    height: 47px;
+    width: 47px;
+    border: none;
+    background: inherit;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+    box-shadow: var(--light-box-shadow);
+}
+.toolbar-button.ion-navicon{
+    font-size: 27px;
+}
+.toolbar-button:active {
+    transform: scale(0.9);
+}
+.toolbar-button:active,
+.toolbar-button:hover {
+    background-color: var(--light-purple-color);
+    /* opacity: 0.8; */
+}
+/* sm sidebar */
+.sidebar-sm .toolbar-button {
+    background: var(--light-purple-color);
+    margin: 0.5rem 0;
+}
+.sidebar-sm .toolbar-button:hover {
+    background: var(--purple-color);
+    color: var(--light-purple-color);
+}
+
+.temp-btn {
+    display: none;
+}
+.toolbar-button.danger {
+    background: var(--light-red-color);
+    color: var(--red-color);
+}
+.toolbar-button.danger:hover, .toolbar-button.danger:active{
+    color: var(--light-red-color);
+    background: var(--red-color);
+}
+
+.animate-icon{
+    animation: animate-rotate 0.2s ease-in-out infinite;
+}
+.toolbar-button:hover, .toolbar-button:active{
+    color: var(--light-purple-color);
+    background-color: var(--purple-color);
+}
+@media only screen and (max-width: 1280px) {
+    .temp-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
