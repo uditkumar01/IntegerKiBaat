@@ -101,26 +101,26 @@ export default function Messenger() {
       setAdmin={setAdmin}
     />
   ) : (
-    <div className="messenger">
+    <div className={`messenger ${sideBarOpen ? "leftbar-lg" : "leftbar-sm"}`}>
+      <div
+        className="scrollable sidebar"
+        style={sideBarOpen ? { width: "360px" } : { width: "70px" }}
+      >
+        {sideBarOpen ? (
+          <SideBar
+            sideBarOpen={sideBarOpen}
+            setSideBarOpen={setSideBarOpen}
+            setUserBarOpen={setUserBarOpen}
+          />
+        ) : (
+          <SideBarSm
+            sideBarOpen={sideBarOpen}
+            setSideBarOpen={setSideBarOpen}
+            setUserBarOpen={setUserBarOpen}
+          />
+        )}
+      </div>
       <div className="scrollable content">
-        <div
-          className="scrollable sidebar"
-          style={sideBarOpen ? { width: "360px" } : { width: "70px" }}
-        >
-          {sideBarOpen ? (
-            <SideBar
-              sideBarOpen={sideBarOpen}
-              setSideBarOpen={setSideBarOpen}
-              setUserBarOpen={setUserBarOpen}
-            />
-          ) : (
-            <SideBarSm
-              sideBarOpen={sideBarOpen}
-              setSideBarOpen={setSideBarOpen}
-              setUserBarOpen={setUserBarOpen}
-            />
-          )}
-        </div>
         <MessageList
           roomId={roomId}
           isReadOnly={isReadOnly}

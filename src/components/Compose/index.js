@@ -24,9 +24,11 @@ export default function Compose({ sendMessage }) {
       <button className="btn-compose emoji-btn far fa-grin"></button>
       <input
         type="text"
+        value={message}
         className="compose-input"
         placeholder="Type a message, @name"
         onKeyDown={(e) => addMessageToChat(e)}
+        onChange={(e) => setMessage(e.target.value)}
       />
 
       <button className="btn-compose send-btn" onClick={addMessageClick}>
