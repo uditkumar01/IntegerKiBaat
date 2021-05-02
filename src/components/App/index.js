@@ -4,6 +4,7 @@ import { createUserDocument } from "../../firebase/users";
 import "./App.css";
 
 import Messenger from "../Messenger";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -20,7 +21,12 @@ export default function App() {
     };
   }, []);
 
-  return <div className="App">{!isSignedIn ? <SignIn /> : <Messenger />}</div>;
+  return (
+    <div className="App">
+      <ToastContainer />
+      {!isSignedIn ? <SignIn /> : <Messenger />}
+    </div>
+  );
 }
 
 function SignIn() {
