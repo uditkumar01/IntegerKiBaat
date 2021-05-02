@@ -28,6 +28,7 @@ export default function Toolbar({
                     <BlockButton
                         name={"join room"}
                         icon={`ion-log-in`}
+                        buttonClass={`danger`}
                         isBlock={true}
                     />
                     <BlockButton

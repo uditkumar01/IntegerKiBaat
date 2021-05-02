@@ -32,6 +32,8 @@
     -5px -5px 9px #ffffff;
     --lighter-box-shadow: 5px 5px 13px #d4d4f5,
     -5px -5px 9px #ffffff;
+    --light-red-color: #f5d6da;
+    --red-color: #f7536c;
     /* main site color */
     --bg-color: #f6f7fb;
 }

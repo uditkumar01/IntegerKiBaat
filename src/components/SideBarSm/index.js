@@ -6,7 +6,12 @@ import axios from "axios";
 
 import "./SideBarSm.css";
 
-export default function SideBarSm({ sideBarOpen, setSideBarOpen, setUserBarOpen }) {
+export default function SideBarSm({
+    sideBarOpen,
+    setSideBarOpen,
+    setUserBarOpen,
+    participants,
+}) {
     const [conversations, setConversations] = useState([]);
     useEffect(() => {
         getConversations();
@@ -49,7 +54,7 @@ export default function SideBarSm({ sideBarOpen, setSideBarOpen, setUserBarOpen 
                 ]}
             />
             <div className={`user-container`}>
-                {conversations.map((conversation) => (
+                {participants.map((conversation) => (
                     <ConversationListItem
                         key={conversation.name}
                         sideBarOpen={sideBarOpen}

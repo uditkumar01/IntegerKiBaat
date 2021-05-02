@@ -12,7 +12,11 @@
 .btn-block {
     width: 85%;
 }
-.btn i{
+.btn.danger {
+    background: var(--light-red-color);
+    color: var(--red-color);
+}
+.btn i {
     font-weight: 800;
 }
 
