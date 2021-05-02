@@ -1,40 +1,49 @@
-import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import firebase,{auth} from '../../firebase'
+import React, { useEffect, useState } from "react";
+import firebase, { auth } from "../../firebase/firebase";
+import { createUserDocument } from "../../firebase/users";
 import "./App.css";
 
-import Messenger from '../Messenger';
+import Messenger from "../Messenger";
 
 export default function App() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
-  // const [user] = useAuthState(auth);
+  useEffect(() => {
+    const observer = auth.onAuthStateChanged(function (user) {
+      if (user) {
+        setIsSignedIn(true);
+        createUserDocument(user);
+      }
+    });
+    return () => {
+      observer();
+    };
+  }, []);
 
-    return (
-      <div className="App">
-
-      {!true? "<SignIn/>" : <Messenger />}
-      </div>
-    );
+  return <div className="App">{!isSignedIn ? <SignIn /> : <Messenger />}</div>;
 }
 
-// function SignIn() {
+function SignIn() {
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  };
 
-//   const signInWithGoogle = () => {
-//     const provider = new firebase.auth.GoogleAuthProvider();
-//     auth.signInWithPopup(provider);
-//   }
+  return (
+    <>
+      <button className="sign-in" onClick={signInWithGoogle}>
+        Sign in with Google
+      </button>
+    </>
+  );
+}
 
-//   return (
-//     <>
-//       <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
-//     </>
-//   )
-
-// }
-
-// function SignOut() {
-//   return auth.currentUser && (
-//     <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
-//   )
-// }
+export function SignOut() {
+  return (
+    auth.currentUser && (
+      <button className="sign-out" onClick={() => auth.signOut()}>
+        Sign Out
+      </button>
+    )
+  );
+}

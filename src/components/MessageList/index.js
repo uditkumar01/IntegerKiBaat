@@ -4,190 +4,120 @@ import Toolbar from "../Toolbar";
 import ToolbarButton from "../ToolbarButton";
 import Message from "../Message";
 import moment from "moment";
-
 import "./MessageList.css";
+import { auth, firestore } from "../../firebase/firebase";
 
-const MY_USER_ID = "apple";
-
-export default function MessageList(props) {
+export default function MessageList({
+    roomId,
+    isReadOnly,
+    setIsReadOnly,
+    setParticipants,
+    participants,
+}) {
+    const roomRef = firestore.collection("rooms").doc(roomId);
+    const messagesRef = roomRef.collection("messages");
+    const [topic, setTopic] = useState("");
     const [messages, setMessages] = useState([]);
 
-    var tempMessages = [
-        {
-            id: 1,
-            author: "apple",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 2,
-            author: "apple",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 3,
-            author: "apple",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 4,
-            author: "apple",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 5,
-            author: "apple",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 6,
-            author: "apple",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 7,
-            author: "orange",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 8,
-            author: "orange",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 9,
-            author: "apple",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 10,
-            author: "orange",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 1,
-            author: "apple",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 2,
-            author: "orange",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 3,
-            author: "orange",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 4,
-            author: "apple",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 5,
-            author: "apple",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 6,
-            author: "apple",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 7,
-            author: "orange",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works. Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 8,
-            author: "orange",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 9,
-            author: "apple",
-            message:
-                "Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.",
-            timestamp: new Date().getTime(),
-        },
-        {
-            id: 10,
-            author: "orange",
-            message:
-                "It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!",
-            timestamp: new Date().getTime(),
-        },
-    ];
+    useEffect(() => {
+        const observer = messagesRef
+            .orderBy("timestamp")
+            .onSnapshot((querySnapshot) => {
+                querySnapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        setMessages((prev) => [...prev, change.doc.data()]);
+                    }
+                    // needed when we set up delete and edit functionality
+                    // if (change.type === 'modified') {
+                    //   console.log('Modified city: ', change.doc.data());
+                    // }
+                    // if (change.type === 'removed') {
+                    //   console.log('Removed city: ', change.doc.data());
+                    // }
+                });
+                return () => {
+                    // TODO: ensure this works after routing
+                    observer();
+                };
+            });
+    }, []);
+
+    useEffect(() => {
+        const observer = firestore
+            .collection("rooms")
+            .doc(roomId)
+            .onSnapshot(
+                (docSnapshot) => {
+                    const {
+                        participants,
+                        readOnly,
+                        topic,
+                    } = docSnapshot.data();
+                    setTopic(topic);
+                    if (readOnly) {
+                        setIsReadOnly(true);
+                    }
+                    setParticipants(participants);
+                },
+                (err) => {
+                    console.log(`Encountered error: ${err}`);
+                }
+            );
+
+        return () => {
+            observer();
+            // remove user from room when he enters other room
+            // (async()=>{
+            //   const newParticipants = updateActiveFlag(
+            //     participants,
+            //     auth.currentUser.uid
+            //   );
+            //   await roomRef.update({participants:newParticipants})
+            // })()
+        };
+    }, []);
+
+    const sendMessage = async (message) => {
+        await messagesRef.add(message);
+    };
 
     return (
         <div className="message-list">
             {/* <Toolbar
-                title="Conversation Title"
-                rightItems={[
-                    <ToolbarButton
-                        key="info"
-                        icon="ion-ios-information-circle-outline"
-                    />,
-                    <ToolbarButton key="video" icon="ion-ios-videocam" />,
-                    <ToolbarButton key="phone" icon="ion-ios-call" />,
-                ]}
-            /> */}
+        title={topic}
+        rightItems={[
+          <ToolbarButton
+            key="info"
+            icon="ion-ios-information-circle-outline"
+          />,
+          <ToolbarButton key="video" icon="ion-ios-videocam" />,
+          <ToolbarButton key="phone" icon="ion-ios-call" />,
+        ]}
+      /> */}
 
             <div className="message-list-container">
-                {tempMessages.map((msg, i) => {
-                    let previous = tempMessages[i - 1];
-                    let current = tempMessages[i];
-                    let next = tempMessages[i + 1];
-                    let isMine = current.author === MY_USER_ID;
-                    let currentMoment = moment(current.timestamp);
+                {messages.map((msg, i) => {
+                    let previous = messages[i - 1];
+                    let current = msg;
+                    let next = messages[i + 1];
+                    let endsSequence = true;
+                    if (next) {
+                        endsSequence = msg.author._id !== next.author._id;
+                    }
+                    let isMine = current.author._id === auth.currentUser.uid;
+                    let currentMoment = moment(Date(current.timestamp));
                     let prevBySameAuthor = false;
                     let nextBySameAuthor = false;
                     let startsSequence = true;
-                    let endsSequence = true;
+
                     let showTimestamp = true;
 
                     if (previous) {
-                        let previousMoment = moment(previous.timestamp);
+                        let previousMoment = moment(Date(previous.timestamp));
                         let previousDuration = moment.duration(
                             currentMoment.diff(previousMoment)
                         );
-                        prevBySameAuthor = previous.author === current.author;
+                        prevBySameAuthor = previous.author._id === current.author._id;
 
                         if (
                             prevBySameAuthor &&
@@ -206,12 +136,13 @@ export default function MessageList(props) {
                         let nextDuration = moment.duration(
                             nextMoment.diff(currentMoment)
                         );
-                        nextBySameAuthor = next.author === current.author;
+                        nextBySameAuthor = next.author._id === current.author._id;
 
                         if (nextBySameAuthor && nextDuration.as("hours") < 1) {
                             endsSequence = false;
                         }
                     }
+                    // console.log(current);
                     return (
                         <Message
                             key={i}
@@ -224,20 +155,7 @@ export default function MessageList(props) {
                     );
                 })}
             </div>
-
-            <Compose
-                rightItems={[
-                    <ToolbarButton key="photo" icon="ion-ios-camera" />,
-                    <ToolbarButton key="image" icon="ion-ios-image" />,
-                    <ToolbarButton key="audio" icon="ion-ios-mic" />,
-                    <ToolbarButton key="money" icon="ion-ios-card" />,
-                    <ToolbarButton
-                        key="games"
-                        icon="ion-logo-game-controller-b"
-                    />,
-                    <ToolbarButton key="emoji" icon="ion-ios-happy" />,
-                ]}
-            />
+            {!isReadOnly && <Compose sendMessage={sendMessage} />}
         </div>
     );
 }

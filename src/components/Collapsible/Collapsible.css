@@ -25,6 +25,7 @@
     max-height: 0px;
     transition: max-height 0.6s ease;
     box-shadow: var(--light-box-shadow);
+    cursor: pointer;
 }
 .no-history{
     width: 100% !important;
@@ -64,6 +65,12 @@
     font-size: 0.82rem;
     color: var(--icon-color);
 }
+.collapsible-title.danger small{
+    color: var(--red-color);
+}
+.collapsible-title i{
+    margin-right: 0.3rem;
+}
 .collapsible-icon {
     background: var(--icon-bg-color);
     color: var(--icon-color-100);
@@ -74,4 +81,5 @@
     align-items: center;
     border-radius: 7px;
     margin-right: 0.8rem;
+    font-size: 1.5rem;
 }

@@ -5,6 +5,7 @@ export default function BlockButton({
     isBlock,
     buttonClass,
     onClick,
+    disabled
 }) {
     return (
         <button
@@ -12,6 +13,7 @@ export default function BlockButton({
                 buttonClass ? buttonClass : ""
             }`}
             onClick={onClick}
+            disabled={disabled}
         >
             {icon && <i className={icon}></i>}
             {name}

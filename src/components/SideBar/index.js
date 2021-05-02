@@ -10,6 +10,8 @@ export default function SideBar({
     sideBarOpen,
     setSideBarOpen,
     setUserBarOpen,
+    participants,
+    ...rest
 }) {
     const [conversations, setConversations] = useState([]);
     useEffect(() => {
@@ -42,6 +44,7 @@ export default function SideBar({
                 }
                 sideBarOpen={sideBarOpen}
                 setUserBarOpen={setUserBarOpen}
+                {...rest}
                 rightItems={[
                     <ToolbarButton
                         key="add"
@@ -49,22 +52,20 @@ export default function SideBar({
                         onClick={() =>
                             setSideBarOpen((sideBarOpen) => !sideBarOpen)
                         }
+                        
                     />,
                 ]}
             />
             <div className={`user-container`}>
-                {conversations.map((conversation) => (
-                    <ConversationListItem
-                        key={conversation.name}
-                        data={conversation}
-                        sideBarOpen={sideBarOpen}
-                        userStatus={
-                            ["not-active", "active", "standby"][
-                                Math.floor(Math.random() * 3)
-                            ]
-                        }
-                    />
-                ))}
+                {participants.map((participant) => {
+                    return (
+                        <ConversationListItem
+                            key={participant.uid}
+                            data={participant}
+                            sideBarOpen={sideBarOpen}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

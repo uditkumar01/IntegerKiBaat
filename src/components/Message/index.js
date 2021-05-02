@@ -9,9 +9,10 @@ export default function Message({
     startsSequence,
     endsSequence,
     showTimestamp,
-    seen,
 }) {
-    const friendlyTimestamp = moment(data.timestamp).format("LLLL");
+    // console.log(data.author.name);
+    const friendlyTimestamp = moment(Date(data.timestamp)).format("ddd LL");
+    // console.log();
     return (
         <div
             className={[
@@ -32,15 +33,19 @@ export default function Message({
                     }`}
                     title="Rohan"
                 >
-                    {!isMine&&<UserImgWithStatus
-                        photo={`http://www.pngmart.com/files/3/Man-PNG-Pic.png`}
-                        userStatus={"active"}
-                        imageClass={`message-round-img`}
-                        scale={0.85}
-                    />}
+                    {!isMine && (
+                        <UserImgWithStatus
+                            photo={data.author.user_img}
+                            userStatus={"active"}
+                            imageClass={`message-round-img`}
+                            scale={0.85}
+                        />
+                    )}
                 </span>
                 <div className="bubble" title={friendlyTimestamp}>
-                    {!isMine&&<p className={`message-author`}>Rohan</p>}
+                    {!isMine && (
+                        <p className={`message-author`}>{data.author.name}</p>
+                    )}
                     <span>{data.message}</span>
                     <small
                         className={`message-time ${
@@ -48,10 +53,10 @@ export default function Message({
                         }`}
                     >
                         8 min ago
-                        <b className={`double-check ${seen ? "seen" : "sent"}`}>
-                            <span className={`ion-ios-checkmark-empty`}></span>
-                            <span className={`ion-ios-checkmark-empty`}></span>
-                        </b>
+                        {/* <b className={`double-check ${seen ? "seen" : "sent"}`}>
+              <span className={`ion-ios-checkmark-empty`}></span>
+              <span className={`ion-ios-checkmark-empty`}></span>
+            </b> */}
                     </small>
                 </div>
             </div>
