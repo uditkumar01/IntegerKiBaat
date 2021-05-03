@@ -1,6 +1,6 @@
 import NavBar from "../NavBar";
 import "./Home.css";
-export default function Home() {
+export default function Home({signInWithGoogle}) {
     return (
         <>
             <NavBar />
@@ -16,7 +16,9 @@ export default function Home() {
                             Unlimited access to free chatting, discussion and
                             more.
                         </p>
-                        <p className={`google-login-container`}>
+                        <p className={`google-login-container`}onClick={()=>{
+                            signInWithGoogle();
+                        }}>
                             <span className={`google-login`}>
                                 <svg
                                     width="23"

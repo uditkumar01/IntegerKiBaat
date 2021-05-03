@@ -22,28 +22,20 @@ export default function App() {
     };
   }, []);
 
-  return (
-    <div className="App">
-      <ToastContainer />
-      {!isSignedIn ? <SignIn /> : <Messenger />}
-      {/* <Home /> */}
-    </div>
-  );
-}
-
-function SignIn() {
+  function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
   };
 
   return (
-    <>
-      <button className="sign-in" onClick={signInWithGoogle}>
-        Sign in with Google
-      </button>
-    </>
+    <div className="App">
+      <ToastContainer />
+      {!isSignedIn ? <Home signInWithGoogle={signInWithGoogle}/> : <Messenger />}
+      
+    </div>
   );
+}
 }
 
 export function SignOut() {
