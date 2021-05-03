@@ -39,7 +39,7 @@ export default function Collapsible({ title, onlyName, roomId }) {
                 <span>{title}</span>
                 <i
                     className={
-                        collapsibleOpen ? "ion-chevron-up" : "ion-chevron-down"
+                        collapsibleOpen ? "fas fa-angle-up" : "fas fa-angle-down"
                     }
                 ></i>
             </p>

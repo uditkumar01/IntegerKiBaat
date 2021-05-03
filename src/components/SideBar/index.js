@@ -37,7 +37,7 @@ export default function SideBar({
                 title={
                     <>
                         <em>
-                            <i className="ion-ios-bolt"></i>
+                            <i className="fas fa-bolt"></i>
                         </em>
                         <strong>Chat</strong>
                     </>
@@ -48,7 +48,7 @@ export default function SideBar({
                 rightItems={[
                     <ToolbarButton
                         key="add"
-                        icon="ion-navicon"
+                        icon="fa fa-bars"
                         onClick={() =>
                             setSideBarOpen((sideBarOpen) => !sideBarOpen)
                         }
