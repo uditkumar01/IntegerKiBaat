@@ -276,7 +276,7 @@ function RoomMenu({ setRoomId, setParticipants, setAdmin }) {
                                 />
                                 <BlockButton
                                     name={`create room`}
-                                    disabled={isLoading}
+                                    disabled={isLoading || !(name)}
                                     onClick={createRoom}
                                     buttonClass={`btn-dark`}
                                     fieldClass={`give-border`}
@@ -294,7 +294,8 @@ function RoomMenu({ setRoomId, setParticipants, setAdmin }) {
                                 />
                                 <BlockButton
                                     name={`join room`}
-                                    disabled={isLoading}
+                                    disabled={isLoading || !exsistingRoomId}
+                                    
                                     onClick={joinRoom}
                                     buttonClass={`btn-dark`}
                                 />
