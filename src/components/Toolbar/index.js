@@ -59,7 +59,7 @@ export default function Toolbar({
                             setUserBarOpen((userBarOpen) => !userBarOpen)
                         }
                     />
-                    <FormField label="Search Rooms" />
+                    <FormField label="Search Participants" />
                 </>
             ) : (
                 <div className="btn-container">

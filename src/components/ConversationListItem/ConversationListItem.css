@@ -33,9 +33,13 @@
 .conversation-snippet {
     font-size: 0.87rem;
     color: var(--light-grey-color);
+    display: inline-block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    max-width: 240px;
     min-width: 240px;
     padding-right: 1.3rem;
     /* background: red; */

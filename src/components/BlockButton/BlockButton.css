@@ -41,7 +41,11 @@
 .temp-btn {
     display: none;
 }
-
+.btn.btn-dark {
+    background: var(--purple-color);
+    color: var(--light-purple-color);
+    margin-top: 3rem;
+}
 .animate-icon{
     animation: animate-rotate 0.2s ease-in-out infinite;
 }

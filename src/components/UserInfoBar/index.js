@@ -3,7 +3,7 @@ import "./UserInfoBar.css";
 import UserImgWithStatus from "../UserImgWithStatus";
 import Collapsible from "../Collapsible";
 import { auth } from "../../firebase/firebase";
-export default function UserInfoBar({userBarOpen, setUserBarOpen}) {
+export default function UserInfoBar({userBarOpen, setUserBarOpen, roomId}) {
     
     return (
         <div className={`user-info-bar ${userBarOpen?"open":""}`}>
@@ -18,7 +18,8 @@ export default function UserInfoBar({userBarOpen, setUserBarOpen}) {
                 <h2 className={`user-name`}>{auth.currentUser.displayName}</h2>
                 <p className={`user-role`}>{auth.currentUser.email}</p>
             </div>
-            <Collapsible title={`Previous Sessions`}/>
+            <Collapsible title={`Copy Session Id`} onlyName={true} roomId={roomId}/>
+            <Collapsible title={`Previous Sessions`} roomId={roomId}/>
         </div>
     );
 }

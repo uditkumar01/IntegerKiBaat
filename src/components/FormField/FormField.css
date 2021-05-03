@@ -30,6 +30,9 @@
     margin-left: 0.15rem;
     background: var(--light-purple-color);
 }
+.give-border .input-text{
+    border: 2px solid rgb(211, 207, 216);
+}
 .input-text:focus {
     border-color: var(--purple-color);
 }

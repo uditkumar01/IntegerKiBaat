@@ -5,6 +5,7 @@ import "./App.css";
 
 import Messenger from "../Messenger";
 import { ToastContainer } from "react-toastify";
+import Home from "../Home";
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -25,6 +26,7 @@ export default function App() {
     <div className="App">
       <ToastContainer />
       {!isSignedIn ? <SignIn /> : <Messenger />}
+      {/* <Home /> */}
     </div>
   );
 }
