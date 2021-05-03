@@ -12,6 +12,8 @@ It is a chatting app that provides clubhouse-like features.
 3. Freeze the chat once you are done and it is forever saved for everyone who took part in it.
 4. New users can join even after the room is freezed. But, they can't add new messages.
 
+[Link to iChat](https://integer-ki-chat.web.app/)
+
 Here's the demo:
 
 [![Our awesome demo](https://img.youtube.com/vi/dr0ouLvhTdc/hqdefault.jpg)](https://www.youtube.com/watch?v=dr0ouLvhTdc)
