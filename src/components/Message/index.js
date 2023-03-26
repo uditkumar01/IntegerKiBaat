@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import "./Message.css";
 import UserImgWithStatus from "../UserImgWithStatus";
+import Linkify from "linkify-react";
 
 export default function Message({
     data,
@@ -11,7 +12,25 @@ export default function Message({
     showTimestamp,
 }) {
     // console.log(data.author.name);
-    const friendlyTimestamp = moment(Date(data.timestamp)).format("ddd LL");
+    const friendlyTimestamp = moment(Date(data.timestamp)).fromNow(
+        updateLocale("en", {
+          relativeTime: {
+            future: "in %s",
+            past: "%s ",
+            s: "sec",
+            m: "%d m",
+            mm: "%d m",
+            h: "%d h",
+            hh: "%d h",
+            d: "%d d",
+            dd: "%d d",
+            M: "a mth",
+            MM: "%d mths",
+            y: "y",
+            yy: "%d y"
+          }
+        })
+      );
     // console.log();
     return (
         <div
@@ -46,13 +65,15 @@ export default function Message({
                     {!isMine && (
                         <p className={`message-author`}>{data.author.name}</p>
                     )}
-                    <span>{data.message}</span>
+                    <Linkify as="p" options={{}}>
+                        {data?.message || ''}
+                      </Linkify>
                     <small
                         className={`message-time ${
                             endsSequence ? "" : "make-invisible"
                         }`}
                     >
-                        8 min ago
+                        {friendlyTimestamp}
                         {/* <b className={`double-check ${seen ? "seen" : "sent"}`}>
               <span className={`ion-ios-checkmark-empty`}></span>
               <span className={`ion-ios-checkmark-empty`}></span>
